@@ -1,0 +1,25 @@
+.menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 3vh 0;
+}
+
+.menu-item {
+    width: 100px;
+    background-color: #b05449;
+    color: #f7edea;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 4px #ca938c;
+}
+
+.clicked {
+    background-color: #9e4b42;
+    box-shadow: inset 1px 1px 4px #a5625a;
+}
+

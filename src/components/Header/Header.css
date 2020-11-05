@@ -1,0 +1,18 @@
+.header {
+    background-color: #390801;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #f7edea;
+}
+
+.header-title {
+    margin-left: 20px;
+    cursor: default;
+}
+
+.setting-icon {
+    float: right;
+}

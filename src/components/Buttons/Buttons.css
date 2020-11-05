@@ -1,0 +1,32 @@
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+}
+
+.button {
+    width: 80px;
+    color: #f7edea;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    padding: 8px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.stop {
+    background-color: #ac1406;
+}
+
+.start {
+    background-color: #47802b;
+}
+
+.reset {
+    border: 1px solid #390801;
+    color: #390801;    
+}
