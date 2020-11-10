@@ -1,2 +1,11 @@
 export const TOGGLE_START = "TOGGLE_START";
 export const TOGGLE_MODE = "TOGGLE_MODE";
+export const UPDATE_TIME = "UPDATE_TIME";
+export const SHOW_SETTINGS = "SHOW_SETTINGS";
+export const SHOW_LOG = "SHOW_LOG";
+export const SAVE_LOG = "SAVE_LOG";
+export const CLEAR_LOG = "CLEAR_LOG";
+export const CHANGE_POMODORO = "CHANGE_POMODORO";
+export const CHANGE_SHORT_BREAK = "CHANGE_SHORT_BREAK";
+export const CHANGE_LONG_BREAK = "CHANGE_LONG_BREAK";
+export const INIT_MODES = "INIT_MODES";

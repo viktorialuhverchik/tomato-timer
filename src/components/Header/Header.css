@@ -13,6 +13,16 @@
     cursor: default;
 }
 
-.setting-icon {
+.button-wrapper {
     float: right;
+    margin-right: 20px;
+}
+
+.log-button {
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.setting-button {
+    cursor: pointer;
 }

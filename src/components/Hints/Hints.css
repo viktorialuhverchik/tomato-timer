@@ -4,3 +4,33 @@
     align-items: center;
     justify-content: center;
 }
+
+.hints-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.shortcuts-text {
+    color: #390801;
+}
+
+.hints-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #390801;
+}
+
+.notifications-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.notifications-text {
+    margin-right: 5px;
+    color: #390801;
+}

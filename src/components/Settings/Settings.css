@@ -3,4 +3,47 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 250px;
+    height: 400px;
+    background-color: #f7edea;
+    border: 1px solid #390801;
+    border-radius: 5px;
 }
+
+.setting-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.select-sound {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close-button {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin-bottom: 15px !important;
+    margin-top: 15px !important;
+}
+

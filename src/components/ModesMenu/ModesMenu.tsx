@@ -1,3 +1,4 @@
+import { Button, ButtonGroup } from '@material-ui/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleMode } from '../../redux/actions/actions';
@@ -11,24 +12,26 @@ const ModesMenu = () => {
 
     return (
         <div className="modes-menu">
-            <button
-                className="menu-item"
-                onClick={() => dispatch(toggleMode(Modes.Pomodoro))}
-            >
-                Pomodoro
-            </button>
-            <button
-                className="menu-item"
-                onClick={() => dispatch(toggleMode(Modes.ShortBreak))}
-            >
-                Short Break
-            </button>
-            <button
-                className="menu-item"
-                onClick={() => dispatch(toggleMode(Modes.LongBreak))}
-            >
-                Long Break
-            </button>
+            <ButtonGroup variant="contained" aria-label="contained primary button group">
+                <Button
+                    className="menu-item"
+                    onClick={() => dispatch(toggleMode(Modes.Pomodoro))}
+                >
+                    {Modes.Pomodoro}
+                </Button>
+                <Button
+                    className="menu-item"
+                    onClick={() => dispatch(toggleMode(Modes.ShortBreak))}
+                >
+                    {Modes.ShortBreak}
+                </Button>
+                <Button 
+                    className="menu-item"
+                    onClick={() => dispatch(toggleMode(Modes.LongBreak))}
+                >
+                    {Modes.LongBreak}
+                </Button>
+            </ButtonGroup>
         </div>
     );
 };

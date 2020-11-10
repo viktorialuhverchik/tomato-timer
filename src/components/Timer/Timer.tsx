@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateTime } from '../../redux/actions/actions';
 import { Modes } from '../../types';
 
 import './Timer.css';
 
-const Timer = ({ isStart, mode }: any) => {
+const Timer = ({ isStart, mode, time, pomodoro, shortBreak, longBreak }: any) => {
 
-    const pomodoro = useSelector((state: any) => state.timer.pomodoro);
-    const shortBreak = useSelector((state: any) => state.timer.shortBreak);
-    const longBreak = useSelector((state: any) => state.timer.longBreak);
-    const [time, setTime] = useState(
-        {
-            minutes: 0,
-            seconds: 0
-        }
-    );
+    const dispatch: any = useDispatch();
     const [seconds, setSeconds] = useState(0);
-
-    const converterTime = (seconds: number) => {
-        let min = Math.floor(seconds / 60);
-        let sec = seconds - (min * 60); 
-        setTime({minutes: min, seconds: sec});
-    };
 
     useEffect(() => {
         mode === Modes.ShortBreak ? 
@@ -30,12 +17,12 @@ const Timer = ({ isStart, mode }: any) => {
     }, [mode]);
 
     useEffect(() => {
-        converterTime(seconds);
-    }, [seconds]);
+        dispatch(updateTime(seconds));
+    }, [seconds, dispatch, mode]);
 
     useEffect(() => {
         if (!isStart) return;
-        if (time.minutes > 0 && time.seconds > 0) {
+        if (seconds > 0) {
             setTimeout(() => setSeconds(seconds - 1), 1000);
         } else {
             console.log("Bzzz!");
