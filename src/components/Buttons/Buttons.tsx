@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, withStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { toggleStart } from '../../redux/actions/actions';
+import { startTimer, stopTimer } from '../../redux/actions/helpers';
 
 import './Buttons.css';
 
@@ -27,7 +27,7 @@ const ButtonStop = withStyles(() => ({
     },
 }))(Button);
 
-const Buttons = () => {
+const Buttons = ({ mode }: any) => {
 
     const dispatch: any = useDispatch();
 
@@ -37,7 +37,7 @@ const Buttons = () => {
                 variant="outlined"
                 color="primary"
                 className="button start"
-                onClick={() => dispatch(toggleStart(true))}
+                onClick={() => startTimer(mode, dispatch)}
             >
                 Start
             </ButtonStart>
@@ -45,7 +45,7 @@ const Buttons = () => {
                 variant="outlined"
                 color="secondary"
                 className="button stop"
-                onClick={() => dispatch(toggleStart(false))}
+                onClick={() => stopTimer(mode, dispatch)}
             >
                 Stop
             </ButtonStop>

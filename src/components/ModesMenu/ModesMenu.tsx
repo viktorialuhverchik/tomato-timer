@@ -1,14 +1,32 @@
 import { Button, ButtonGroup } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleMode } from '../../redux/actions/actions';
+import { toggleMode, toggleStartLongBreak, toggleStartPomodoro, toggleStartShortBreak } from '../../redux/actions/actions';
 import { Modes } from '../../types';
 
 import './ModesMenu.css';
 
-const ModesMenu = () => {
+const ModesMenu = ({ mode, isStartPomodoro, isStartShortBreak, isStartLongBreak }: any) => {
 
     const dispatch: any = useDispatch();
+
+    useEffect(() => {
+        if (!isStartPomodoro && !isStartShortBreak && !isStartLongBreak) return;
+        switch(mode) {
+            case Modes.Pomodoro:
+                if (isStartShortBreak) dispatch(toggleStartShortBreak(false));
+                if (isStartLongBreak) dispatch(toggleStartLongBreak(false));
+                return dispatch(toggleStartPomodoro(true));
+            case Modes.ShortBreak:
+                if (isStartPomodoro) dispatch(toggleStartPomodoro(false));
+                if (isStartLongBreak) dispatch(toggleStartLongBreak(false));
+                return dispatch(toggleStartShortBreak(true));
+            case Modes.LongBreak:
+                if (isStartPomodoro) dispatch(toggleStartPomodoro(false));
+                if (isStartShortBreak) dispatch(toggleStartShortBreak(false));
+                return dispatch(toggleStartLongBreak(true));
+        }
+    }, [mode]);
 
     return (
         <div className="modes-menu">

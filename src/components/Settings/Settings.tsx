@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { changeLongBreakTime, changePomodoroTime, changeShortBreakTime, initModes, showSettings } from '../../redux/actions/actions';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-import './Settings.css';
 import {
     Button,
     Checkbox,
@@ -20,23 +16,56 @@ import {
     TextField
 } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import {
+    changeLongBreakTime,
+    changePomodoroTime,
+    changeShortBreakTime,
+    showSettings
+} from '../../redux/actions/actions';
 import { Modes } from '../../types';
+
+import './Settings.css';
+import { initialState } from '../../redux/reducers/modesReducer';
 
 const sounds: any = ["1", "2", "3", "4"];
 
 const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => {
 
     const dispatch: any = useDispatch();
-    const [value, setValue] = useState(30);
+    const [volume, setVolume] = useState(30);
+    const [newPomodoro, setNewPomodoro] = useState(pomodoro);
+    const [newShortBreak, setNewShortBreak] = useState(shortBreak);
+    const [newLongBreak, setNewLongBreak] = useState(longBreak);
 
     const handleBlur = () => {
-        if (value < 0) {
-            setValue(0);
-        } else if (value > 100) {
-            setValue(100);
+        if (volume < 0) {
+            setVolume(0);
+        } else if (volume > 100) {
+            setVolume(100);
         }
     };
 
+    useEffect(() => {
+        setNewPomodoro(pomodoro);
+        setNewShortBreak(shortBreak);
+        setNewLongBreak(longBreak);
+    }, [pomodoro, shortBreak, longBreak]);
+
+    const saveChangedTime = () => {
+        dispatch(changePomodoroTime(newPomodoro));
+        dispatch(changeShortBreakTime(newShortBreak));
+        dispatch(changeLongBreakTime(newLongBreak));
+        dispatch(showSettings(!isShowSettings));
+    };
+
+    const initSettings = () => {
+        setVolume(30);
+        setNewPomodoro(initialState.pomodoro);
+        setNewShortBreak(initialState.shortBreak);
+        setNewLongBreak(initialState.longBreak);
+    };
+    
     return (
         <div className="app-settings">
             <Dialog
@@ -97,17 +126,16 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                             </Grid>
                             <Grid item xs>
                             <Slider
-                                value={typeof value === 'number' ? value : 0}
-                                onChange={(event, newValue) => setValue(+newValue)}
+                                value={typeof volume === 'number' ? volume : 0}
+                                onChange={(event, newVolume) => setVolume(+newVolume)}
                                 aria-labelledby="input-slider"
                             />
                             </Grid>
                             <Grid item>
                             <Input
-                                className=""
-                                value={value}
+                                value={volume}
                                 margin="dense"
-                                onChange={(event) => setValue(+event.target.value)}
+                                onChange={(event) => setVolume(+event.target.value)}
                                 onBlur={handleBlur}
                                 inputProps={{
                                     step: 10,
@@ -130,8 +158,8 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                             id="outlined-multiline-flexible"
                             label={Modes.Pomodoro}
                             multiline
-                            value={pomodoro}
-                            onChange={(event) => dispatch(changePomodoroTime(+event.target.value))}
+                            value={newPomodoro}
+                            onChange={(event) => setNewPomodoro(+event.target.value)}
                             variant="outlined"
                         />
                         <TextField
@@ -139,8 +167,8 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                             id="outlined-multiline-flexible"
                             label={Modes.ShortBreak}
                             multiline
-                            value={shortBreak}
-                            onChange={(event) => dispatch(changeShortBreakTime(+event.target.value))}
+                            value={newShortBreak}
+                            onChange={(event) => setNewShortBreak(+event.target.value)}
                             variant="outlined"
                         />
                         <TextField
@@ -148,17 +176,17 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                             id="outlined-multiline-flexible"
                             label={Modes.LongBreak}
                             multiline
-                            value={longBreak}
-                            onChange={(event) => dispatch(changeLongBreakTime(+event.target.value))}
+                            value={newLongBreak}
+                            onChange={(event) => setNewLongBreak(+event.target.value)}
                             variant="outlined"
                         />
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button type="submit" onClick={() => dispatch(showSettings(!isShowSettings))} color="primary">
+                    <Button type="submit" onClick={saveChangedTime} color="primary">
                         Save
                     </Button>
-                    <Button onClick={() => dispatch(initModes())} color="primary">
+                    <Button onClick={initSettings} color="primary">
                         Reset
                     </Button>
                     <Button onClick={() => dispatch(showSettings(!isShowSettings))} color="primary">

@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateTime } from '../../redux/actions/actions';
 import { Modes } from '../../types';
 
 import './Timer.css';
 
-const Timer = ({ isStart, mode, time, pomodoro, shortBreak, longBreak }: any) => {
+const Timer = ({ isStartPomodoro, isStartShortBreak, isStartLongBreak, mode, time, pomodoro, shortBreak, longBreak }: any) => {
 
     const dispatch: any = useDispatch();
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(pomodoro * 60);
 
     useEffect(() => {
         mode === Modes.ShortBreak ? 
         setSeconds(shortBreak * 60) : mode === Modes.LongBreak ?
         setSeconds(longBreak * 60) : setSeconds(pomodoro * 60);
-    }, [mode]);
+    }, [mode, pomodoro, shortBreak, longBreak]);
 
     useEffect(() => {
         dispatch(updateTime(seconds));
-    }, [seconds, dispatch, mode]);
+    }, [seconds]);
 
     useEffect(() => {
-        if (!isStart) return;
+        if (!isStartPomodoro && !isStartShortBreak && !isStartLongBreak) return;
         if (seconds > 0) {
             setTimeout(() => setSeconds(seconds - 1), 1000);
         } else {
             console.log("Bzzz!");
         }
-    }, [isStart, seconds]);
+    }, [isStartPomodoro, isStartShortBreak, isStartLongBreak, seconds]);
 
     return (
         <div className="timer">

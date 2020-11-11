@@ -12,19 +12,19 @@ const Hints = () => {
                     <span className="hints-title">Keyboard shortcuts</span>
                     <ul>
                         <li>
-                            <span className="shortcuts-text"><strong>SPACE  </strong>&nbsp;&nbsp;&nbsp;&nbsp;Start or Stop the timer</span>
+                            <span className="shortcuts-text"><strong>P</strong>&nbsp;&nbsp;&nbsp;&nbsp;Pomodoro</span>
                         </li>
                         <li>
-                            <span className="shortcuts-text"><strong>ALT + P</strong>&nbsp;&nbsp;&nbsp;&nbsp;Pomodoro</span>
+                            <span className="shortcuts-text"><strong>S</strong>&nbsp;&nbsp;&nbsp;&nbsp;Short Break</span>
                         </li>
                         <li>
-                            <span className="shortcuts-text"><strong>ALT + S</strong>&nbsp;&nbsp;&nbsp;&nbsp;Short Break</span>
+                            <span className="shortcuts-text"><strong>L</strong>&nbsp;&nbsp;&nbsp;&nbsp;Long Break</span>
                         </li>
                         <li>
-                            <span className="shortcuts-text"><strong>ALT + L</strong>&nbsp;&nbsp;&nbsp;&nbsp;Long Break</span>
+                            <span className="shortcuts-text"><strong>R</strong>&nbsp;&nbsp;&nbsp;&nbsp;Reset Timer</span>
                         </li>
                         <li>
-                            <span className="shortcuts-text"><strong>ALT + R</strong>&nbsp;&nbsp;&nbsp;&nbsp;Reset Timer</span>
+                            <span className="shortcuts-text"><strong>SPACE</strong>&nbsp;&nbsp;&nbsp;&nbsp;Start or Stop the timer</span>
                         </li>
                     </ul>
                     <span className="hints-title">Notifications</span>

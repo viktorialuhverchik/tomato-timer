@@ -2,19 +2,31 @@ import {
     UPDATE_TIME,
     SHOW_SETTINGS,
     TOGGLE_MODE,
-    TOGGLE_START,
     SHOW_LOG,
     SAVE_LOG,
     CLEAR_LOG,
     CHANGE_POMODORO,
     CHANGE_SHORT_BREAK,
     CHANGE_LONG_BREAK,
-    INIT_MODES
+    INIT_MODES,
+    TOGGLE_START_POMODORO,
+    TOGGLE_START_SHORT,
+    TOGGLE_START_LONG
 } from "../types";
 
-export const toggleStart = (isStart: boolean) => ({
-    type: TOGGLE_START,
-    isStart
+export const toggleStartPomodoro = (isStartPomodoro: boolean) => ({
+    type: TOGGLE_START_POMODORO,
+    isStartPomodoro
+});
+
+export const toggleStartShortBreak = (isStartShortBreak: boolean) => ({
+    type: TOGGLE_START_SHORT,
+    isStartShortBreak
+});
+
+export const toggleStartLongBreak = (isStartLongBreak: boolean) => ({
+    type: TOGGLE_START_LONG,
+    isStartLongBreak
 });
 
 export const toggleMode = (mode: string) => ({
@@ -46,19 +58,19 @@ export const clearLog= () => ({
     type: CLEAR_LOG
 });
 
-export const changePomodoroTime = (pomodoro: number) => ({
+export const changePomodoroTime = (pomodoroTime: number) => ({
     type: CHANGE_POMODORO,
-    pomodoro
+    pomodoroTime
 });
 
-export const changeShortBreakTime = (shortBreak: number) => ({
+export const changeShortBreakTime = (shortBreakTime: number) => ({
     type: CHANGE_SHORT_BREAK,
-    shortBreak
+    shortBreakTime
 });
 
-export const changeLongBreakTime = (longBreak: number) => ({
+export const changeLongBreakTime = (longBreakTime: number) => ({
     type: CHANGE_LONG_BREAK,
-    longBreak
+    longBreakTime
 });
 
 export const initModes = () => ({
