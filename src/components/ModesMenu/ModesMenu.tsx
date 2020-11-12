@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleMode, toggleStartLongBreak, toggleStartPomodoro, toggleStartShortBreak } from '../../redux/actions/actions';
+import { toggleMode } from '../../redux/actions/actions';
 import { Modes } from '../../types';
 
 import './ModesMenu.css';
@@ -9,42 +9,55 @@ import './ModesMenu.css';
 const ModesMenu = ({ mode, isStartPomodoro, isStartShortBreak, isStartLongBreak }: any) => {
 
     const dispatch: any = useDispatch();
+    const [isDisabledPomodoro, setIsDisabledPomodoro] = useState(false);
+    const [isDisabledShortBreak, setIsDisabledShortBreak] = useState(false);
+    const [isDisabledLongBreak, setIsDisabledLongBreak] = useState(false);
 
     useEffect(() => {
-        if (!isStartPomodoro && !isStartShortBreak && !isStartLongBreak) return;
+        if (!isStartPomodoro && !isStartShortBreak && !isStartLongBreak) {
+            setIsDisabledPomodoro(false);
+            setIsDisabledShortBreak(false);
+            setIsDisabledLongBreak(false);
+        };
         switch(mode) {
             case Modes.Pomodoro:
-                if (isStartShortBreak) dispatch(toggleStartShortBreak(false));
-                if (isStartLongBreak) dispatch(toggleStartLongBreak(false));
-                return dispatch(toggleStartPomodoro(true));
+                if (isStartPomodoro) {
+                    setIsDisabledShortBreak(true);
+                    setIsDisabledLongBreak(true);
+                };
+                break;
             case Modes.ShortBreak:
-                if (isStartPomodoro) dispatch(toggleStartPomodoro(false));
-                if (isStartLongBreak) dispatch(toggleStartLongBreak(false));
-                return dispatch(toggleStartShortBreak(true));
+                if (isStartShortBreak) {
+                    setIsDisabledPomodoro(true);
+                    setIsDisabledLongBreak(true);
+                };
+                break;
             case Modes.LongBreak:
-                if (isStartPomodoro) dispatch(toggleStartPomodoro(false));
-                if (isStartShortBreak) dispatch(toggleStartShortBreak(false));
-                return dispatch(toggleStartLongBreak(true));
+                if (isStartLongBreak) {
+                    setIsDisabledPomodoro(true);
+                    setIsDisabledShortBreak(true);
+                };
+                break;
         }
-    }, [mode]);
+    }, [mode, isStartPomodoro, isStartShortBreak, isStartLongBreak]);
 
     return (
         <div className="modes-menu">
             <ButtonGroup variant="contained" aria-label="contained primary button group">
                 <Button
-                    className="menu-item"
+                    className={`menu-item ${!isDisabledPomodoro ? "" : "disabled"}`}
                     onClick={() => dispatch(toggleMode(Modes.Pomodoro))}
                 >
                     {Modes.Pomodoro}
                 </Button>
                 <Button
-                    className="menu-item"
+                    className={`menu-item ${!isDisabledShortBreak ? "" : "disabled"}`}
                     onClick={() => dispatch(toggleMode(Modes.ShortBreak))}
                 >
                     {Modes.ShortBreak}
                 </Button>
                 <Button 
-                    className="menu-item"
+                    className={`menu-item ${!isDisabledLongBreak ? "" : "disabled"}`}
                     onClick={() => dispatch(toggleMode(Modes.LongBreak))}
                 >
                     {Modes.LongBreak}

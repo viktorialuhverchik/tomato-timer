@@ -11,7 +11,8 @@ import {
     INIT_MODES,
     TOGGLE_START_POMODORO,
     TOGGLE_START_SHORT,
-    TOGGLE_START_LONG
+    TOGGLE_START_LONG,
+    CHANGE_SOUND
 } from "../types";
 
 export const toggleStartPomodoro = (isStartPomodoro: boolean) => ({
@@ -73,6 +74,16 @@ export const changeLongBreakTime = (longBreakTime: number) => ({
     longBreakTime
 });
 
+export const changeSound = (soundUrl: string) => ({
+    type: CHANGE_SOUND,
+    soundUrl
+});
+
 export const initModes = () => ({
     type: INIT_MODES
 });
+
+export const playSound = (soundUrl: string) => {
+    let sound = new Audio(soundUrl);
+    sound.play();
+};

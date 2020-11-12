@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Button,
@@ -23,12 +23,22 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { showLog } from '../../redux/actions/actions';
+import { DateOptions } from '../../types';
 
 import './Log.css';
 
-const Log = ({ isShowLog }: any) => {
+const Log = ({ isShowLog, log }: any) => {
 
     const dispatch: any = useDispatch();
+
+    useEffect(() => {
+        let log = localStorage.getItem("log");
+        if(!log) {
+            return;
+        }
+        let formattedLog = JSON.parse(log);
+        // dispatch(createLog(formattedLog));
+    }, [dispatch]);
 
     return (
         <div className="app-settings">
@@ -54,26 +64,28 @@ const Log = ({ isShowLog }: any) => {
                                 <TableCell align="right">Description</TableCell>
                             </TableRow>
                             </TableHead>
-                            {/* <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
+                            <TableBody>
+                            {!log ? <TableRow key="1"><TableCell align="right">Nothing logged yet</TableCell></TableRow> :
+                                log.map((item: any) => (
+                                <TableRow key={item.id}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {item.session}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
+                                <TableCell align="right">{item.startTime}</TableCell>
+                                <TableCell align="right">{item.endTime}</TableCell>
                                 <TableCell align="right">
                                     <TextField
                                         id="outlined-basic"
                                         label="Description"
                                         multiline
+                                        value={item.description}
                                         onChange={() => console.log("description")}
                                         variant="outlined"
                                     />
                                 </TableCell>
                                 </TableRow>
                             ))}
-                            </TableBody> */}
+                            </TableBody>
                         </Table>
                     </TableContainer>
                     

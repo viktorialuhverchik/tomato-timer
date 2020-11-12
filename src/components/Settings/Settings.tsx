@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Button,
@@ -21,16 +21,24 @@ import {
     changeLongBreakTime,
     changePomodoroTime,
     changeShortBreakTime,
+    changeSound,
+    playSound,
     showSettings
 } from '../../redux/actions/actions';
-import { Modes } from '../../types';
+import { Modes, Sounds } from '../../types';
 
 import './Settings.css';
 import { initialState } from '../../redux/reducers/modesReducer';
 
-const sounds: any = ["1", "2", "3", "4"];
+const sounds: any = [
+    {id: 1, url: Sounds.AlarmBeepElectronic, name: "Alarm Beep Electronic"},
+    {id: 2, url: Sounds.AlarmClock, name: "Alarm Clock"},
+    {id: 3, url: Sounds.CellphoneAlarmClock, name: "Cellphone Alarm Clock"},
+    {id: 4, url: Sounds.OldClock, name: "Old Clock"},
+    {id: 5, url: Sounds.Wakey, name: "Wakey"},
+];
 
-const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => {
+const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }: any) => {
 
     const dispatch: any = useDispatch();
     const [volume, setVolume] = useState(30);
@@ -61,9 +69,9 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
 
     const initSettings = () => {
         setVolume(30);
-        setNewPomodoro(initialState.pomodoro);
-        setNewShortBreak(initialState.shortBreak);
-        setNewLongBreak(initialState.longBreak);
+        setNewPomodoro(initialState.pomodoro.time);
+        setNewShortBreak(initialState.shortBreak.time);
+        setNewLongBreak(initialState.longBreak.time);
     };
     
     return (
@@ -102,14 +110,14 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                                 multiple
                                 native
                                 value={sounds}
-                                onChange={() => console.log("input")}
+                                onChange={(event: any) => dispatch(changeSound(event.target.value))}
                                 inputProps={{
                                     id: 'select-multiple-native',
                                 }}
                             >
                             {sounds.map((sound: any) => (
-                                <option key={sound} value={sound}>
-                                    {sound}
+                                <option key={sound.id} value={sound.url}>
+                                    {sound.name}
                                 </option>
                             ))}
                             </Select>
@@ -189,7 +197,7 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak }: any) => 
                     <Button onClick={initSettings} color="primary">
                         Reset
                     </Button>
-                    <Button onClick={() => dispatch(showSettings(!isShowSettings))} color="primary">
+                    <Button onClick={() => playSound(soundUrl)} color="primary">
                         Sound test
                     </Button>
                 </DialogActions>

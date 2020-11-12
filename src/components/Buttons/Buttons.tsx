@@ -49,13 +49,13 @@ const Buttons = ({ mode }: any) => {
             >
                 Stop
             </ButtonStop>
-            <Button 
+            {/* <Button 
                 variant="outlined"
                 className="button reset"
                 onClick={() => console.log("reset")}
             >
                 Reset
-            </Button>
+            </Button> */}
         </div>
     );
 };
