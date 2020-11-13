@@ -9,25 +9,25 @@ import {
     CHANGE_SHORT_BREAK,
     CHANGE_LONG_BREAK,
     INIT_MODES,
-    TOGGLE_START_POMODORO,
-    TOGGLE_START_SHORT,
-    TOGGLE_START_LONG,
-    CHANGE_SOUND
+    TOGGLE_START,
+    CHANGE_SOUND,
+    CREATE_LOG,
+    AppActionTypes
 } from "../types";
 
-export const toggleStartPomodoro = (isStartPomodoro: boolean) => ({
-    type: TOGGLE_START_POMODORO,
-    isStartPomodoro
+export const toggleStart = (isStart: boolean): AppActionTypes => ({
+    type: TOGGLE_START,
+    isStart
 });
 
-export const toggleStartShortBreak = (isStartShortBreak: boolean) => ({
-    type: TOGGLE_START_SHORT,
-    isStartShortBreak
+export const showSettings = (isShowSettings: boolean): AppActionTypes => ({
+    type: SHOW_SETTINGS,
+    isShowSettings
 });
 
-export const toggleStartLongBreak = (isStartLongBreak: boolean) => ({
-    type: TOGGLE_START_LONG,
-    isStartLongBreak
+export const showLog = (isShowLog: boolean): AppActionTypes => ({
+    type: SHOW_LOG,
+    isShowLog
 });
 
 export const toggleMode = (mode: string) => ({
@@ -40,14 +40,9 @@ export const updateTime = (seconds: number) => ({
     seconds
 });
 
-export const showSettings = (isShowSettings: boolean) => ({
-    type: SHOW_SETTINGS,
-    isShowSettings
-});
-
-export const showLog= (isShowLog: boolean) => ({
-    type: SHOW_LOG,
-    isShowLog
+export const createLog = (log: any) => ({
+    type: CREATE_LOG,
+    log
 });
 
 export const saveLog= (log: any) => ({
@@ -59,19 +54,19 @@ export const clearLog= () => ({
     type: CLEAR_LOG
 });
 
-export const changePomodoroTime = (pomodoroTime: number) => ({
+export const changePomodoroTime = (pomodoro: number) => ({
     type: CHANGE_POMODORO,
-    pomodoroTime
+    pomodoro
 });
 
-export const changeShortBreakTime = (shortBreakTime: number) => ({
+export const changeShortBreakTime = (shortBreak: number) => ({
     type: CHANGE_SHORT_BREAK,
-    shortBreakTime
+    shortBreak
 });
 
-export const changeLongBreakTime = (longBreakTime: number) => ({
+export const changeLongBreakTime = (longBreak: number) => ({
     type: CHANGE_LONG_BREAK,
-    longBreakTime
+    longBreak
 });
 
 export const changeSound = (soundUrl: string) => ({

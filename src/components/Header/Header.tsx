@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { showLog, showSettings } from '../../redux/actions/actions';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { PropsHeader } from '../../types';
 
 import './Header.css';
 
-const Header = ({ isShowSettings, isShowLog }: any) => {
+const Header: FC<PropsHeader> = ({ isShowSettings, isShowLog }) => {
 
     const dispatch: any = useDispatch();
 

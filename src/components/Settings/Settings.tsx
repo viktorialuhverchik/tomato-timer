@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Button,
@@ -25,12 +25,12 @@ import {
     playSound,
     showSettings
 } from '../../redux/actions/actions';
-import { Modes, Sounds } from '../../types';
+import { ISound, Modes, PropsSettings, Sounds } from '../../types';
 
 import './Settings.css';
 import { initialState } from '../../redux/reducers/modesReducer';
 
-const sounds: any = [
+const sounds: Array<ISound> = [
     {id: 1, url: Sounds.AlarmBeepElectronic, name: "Alarm Beep Electronic"},
     {id: 2, url: Sounds.AlarmClock, name: "Alarm Clock"},
     {id: 3, url: Sounds.CellphoneAlarmClock, name: "Cellphone Alarm Clock"},
@@ -38,13 +38,13 @@ const sounds: any = [
     {id: 5, url: Sounds.Wakey, name: "Wakey"},
 ];
 
-const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }: any) => {
+const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }) => {
 
     const dispatch: any = useDispatch();
-    const [volume, setVolume] = useState(30);
-    const [newPomodoro, setNewPomodoro] = useState(pomodoro);
-    const [newShortBreak, setNewShortBreak] = useState(shortBreak);
-    const [newLongBreak, setNewLongBreak] = useState(longBreak);
+    const [volume, setVolume] = useState<number>(30);
+    const [newPomodoro, setNewPomodoro] = useState<number>(pomodoro);
+    const [newShortBreak, setNewShortBreak] = useState<number>(shortBreak);
+    const [newLongBreak, setNewLongBreak] = useState<number>(longBreak);
 
     const handleBlur = () => {
         if (volume < 0) {
@@ -69,9 +69,9 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }
 
     const initSettings = () => {
         setVolume(30);
-        setNewPomodoro(initialState.pomodoro.time);
-        setNewShortBreak(initialState.shortBreak.time);
-        setNewLongBreak(initialState.longBreak.time);
+        setNewPomodoro(initialState.pomodoro);
+        setNewShortBreak(initialState.shortBreak);
+        setNewLongBreak(initialState.longBreak);
     };
     
     return (
@@ -115,7 +115,7 @@ const Settings = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }
                                     id: 'select-multiple-native',
                                 }}
                             >
-                            {sounds.map((sound: any) => (
+                            {sounds.map((sound: ISound) => (
                                 <option key={sound.id} value={sound.url}>
                                     {sound.name}
                                 </option>

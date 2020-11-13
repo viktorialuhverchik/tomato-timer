@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import SettingsIcon from '@material-ui/icons/Settings';
 import './Hints.css';
 
-const Hints = () => {
+const Hints: FC = () => {
+    
     return (
         <div className="hints">
             <Card>
@@ -20,9 +21,6 @@ const Hints = () => {
                         <li>
                             <span className="shortcuts-text"><strong>L</strong>&nbsp;&nbsp;&nbsp;&nbsp;Long Break</span>
                         </li>
-                        {/* <li>
-                            <span className="shortcuts-text"><strong>R</strong>&nbsp;&nbsp;&nbsp;&nbsp;Reset Timer</span>
-                        </li> */}
                         <li>
                             <span className="shortcuts-text"><strong>SPACE</strong>&nbsp;&nbsp;&nbsp;&nbsp;Start or Stop the timer</span>
                         </li>

@@ -1,18 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
-    FormControl,
-    Grid,
-    Input,
     Paper,
-    Select,
-    Slider,
     Table,
     TableBody,
     TableCell,
@@ -22,22 +16,20 @@ import {
     TextField
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { showLog } from '../../redux/actions/actions';
-import { DateOptions } from '../../types';
+import { clearLog, createLog, showLog } from '../../redux/actions/actions';
+import { ILogItem, PropsLog } from '../../types';
 
 import './Log.css';
 
-const Log = ({ isShowLog, log }: any) => {
+const Log: FC<PropsLog> = ({ isShowLog, log }) => {
 
     const dispatch: any = useDispatch();
 
     useEffect(() => {
-        let log = localStorage.getItem("log");
-        if(!log) {
-            return;
+        let logFromStorage = localStorage.getItem("log");
+        if(logFromStorage) {
+            dispatch(createLog(JSON.parse(logFromStorage)));
         }
-        let formattedLog = JSON.parse(log);
-        // dispatch(createLog(formattedLog));
     }, [dispatch]);
 
     return (
@@ -66,7 +58,7 @@ const Log = ({ isShowLog, log }: any) => {
                             </TableHead>
                             <TableBody>
                             {!log ? <TableRow key="1"><TableCell align="right">Nothing logged yet</TableCell></TableRow> :
-                                log.map((item: any) => (
+                                log.map((item: ILogItem) => (
                                 <TableRow key={item.id}>
                                 <TableCell component="th" scope="row">
                                     {item.session}
@@ -91,7 +83,7 @@ const Log = ({ isShowLog, log }: any) => {
                     
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => dispatch(showLog(!isShowLog))} color="primary">
+                    <Button onClick={() => dispatch(clearLog())} color="primary">
                         Clear timer log
                     </Button>
                 </DialogActions>
