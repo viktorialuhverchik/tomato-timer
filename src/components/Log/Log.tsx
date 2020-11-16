@@ -23,28 +23,37 @@ import './Log.css';
 
 const Log: FC<PropsLog> = ({ isShowLog, log }) => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        let logFromStorage = localStorage.getItem("log");
+        const logFromStorage: string | null = localStorage.getItem("log");
         if(logFromStorage) {
             dispatch(createLog(JSON.parse(logFromStorage)));
         }
     }, [dispatch]);
+
+    const handleClickShowLog = () => {
+        dispatch(showLog(!isShowLog));
+    };
+
+    const handleClearLog = () => {
+        dispatch(clearLog());
+    };
 
     return (
         <div className="app-settings">
             <Dialog
                 open={isShowLog}
                 keepMounted
-                onClose={() => dispatch(showLog(!isShowLog))}
+                onClose={handleClickShowLog}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
                 <div className="title-wrapper">
                     <DialogTitle id="alert-dialog-title">Time log</DialogTitle>
-                    <CloseIcon className="close-button" onClick={() => dispatch(showLog(!isShowLog))} />
+                    <CloseIcon className="close-button" onClick={handleClickShowLog} />
                 </div>
+
                 <DialogContent>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
@@ -57,7 +66,10 @@ const Log: FC<PropsLog> = ({ isShowLog, log }) => {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {!log ? <TableRow key="1"><TableCell align="right">Nothing logged yet</TableCell></TableRow> :
+                            {!log ?
+                                <TableRow key="1">
+                                    <TableCell align="right">Nothing logged yet</TableCell>
+                                </TableRow> :
                                 log.map((item: ILogItem) => (
                                 <TableRow key={item.id}>
                                 <TableCell component="th" scope="row">
@@ -80,10 +92,10 @@ const Log: FC<PropsLog> = ({ isShowLog, log }) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    
                 </DialogContent>
+
                 <DialogActions>
-                    <Button onClick={() => dispatch(clearLog())} color="primary">
+                    <Button onClick={handleClearLog} color="primary">
                         Clear timer log
                     </Button>
                 </DialogActions>

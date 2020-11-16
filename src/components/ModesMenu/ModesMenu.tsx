@@ -8,26 +8,32 @@ import './ModesMenu.css';
 
 const ModesMenu: FC<PropsModesMenu> = ({ isStart, mode }) => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleClickToggleMode = (selectedMode: string) => {
+        dispatch(toggleMode(selectedMode));
+    };
 
     return (
         <div className="modes-menu">
             <ButtonGroup variant="contained" aria-label="contained primary button group">
                 <Button
                     className={`menu-item ${((mode === Modes.ShortBreak && isStart) || (mode === Modes.LongBreak && isStart)) ? "disabled" : ""}`}
-                    onClick={() => dispatch(toggleMode(Modes.Pomodoro))}
+                    onClick={() => handleClickToggleMode(Modes.Pomodoro)}
                 >
                     {Modes.Pomodoro}
                 </Button>
+
                 <Button
                     className={`menu-item ${((mode === Modes.Pomodoro && isStart) || (mode === Modes.LongBreak && isStart)) ? "disabled" : ""}`}
-                    onClick={() => dispatch(toggleMode(Modes.ShortBreak))}
+                    onClick={() => handleClickToggleMode(Modes.ShortBreak)}
                 >
                     {Modes.ShortBreak}
                 </Button>
-                <Button 
+
+                <Button
                     className={`menu-item ${((mode === Modes.ShortBreak && isStart) || (mode === Modes.Pomodoro && isStart)) ? "disabled" : ""}`}
-                    onClick={() => dispatch(toggleMode(Modes.LongBreak))}
+                    onClick={() => handleClickToggleMode(Modes.LongBreak)}
                 >
                     {Modes.LongBreak}
                 </Button>

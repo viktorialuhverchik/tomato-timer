@@ -8,10 +8,10 @@ const initialState: TimerState = {
 export const timerReducer = (state = initialState, action: UpdateTime) => {
     switch (action.type) {
         case UPDATE_TIME:
-            let minutes = Math.floor(action.seconds / 60);
-            let seconds = action.seconds - (minutes * 60);
+            const minutes: number = Math.floor(action.seconds / 60);
+            const seconds: number = action.seconds - (minutes * 60);
             return {...state, minutes, seconds};
-        default: 
+        default:
             return state;
     };
 };

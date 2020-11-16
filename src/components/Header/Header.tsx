@@ -9,14 +9,26 @@ import './Header.css';
 
 const Header: FC<PropsHeader> = ({ isShowSettings, isShowLog }) => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleClickShowLog = () => {
+        dispatch(showLog(!isShowLog));
+    };
+
+    const handleClickShowSettings = () => {
+        dispatch(showSettings(!isShowSettings));
+    };
 
     return (
         <div className="header">
             <h1 className="header-title">Tomato Timer</h1>
+
             <div className="button-wrapper">
-                <AccessTimeIcon className="log-button" onClick={() => dispatch(showLog(!isShowLog))} />
-                <SettingsIcon className="setting-button" onClick={() => dispatch(showSettings(!isShowSettings))} />
+
+                <AccessTimeIcon className="log-button" onClick={handleClickShowLog} />
+
+                <SettingsIcon className="setting-button" onClick={handleClickShowSettings} />
+
             </div>
         </div>
     );

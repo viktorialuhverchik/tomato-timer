@@ -79,12 +79,12 @@ interface InitModes {
 
 interface CreateLog {
     type: typeof CREATE_LOG,
-    log: Array<ILogItem>
+    log: ILogItem[]
 };
 
 interface SaveLog {
     type: typeof SAVE_LOG,
-    log: Array<ILogItem>
+    log: ILogItem[]
 };
 
 interface ClearLog {

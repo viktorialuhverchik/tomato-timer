@@ -26,11 +26,11 @@ import {
     showSettings
 } from '../../redux/actions/actions';
 import { ISound, Modes, PropsSettings, Sounds } from '../../types';
-
-import './Settings.css';
 import { initialState } from '../../redux/reducers/modesReducer';
 
-const sounds: Array<ISound> = [
+import './Settings.css';
+
+const sounds: ISound[] = [
     {id: 1, url: Sounds.AlarmBeepElectronic, name: "Alarm Beep Electronic"},
     {id: 2, url: Sounds.AlarmClock, name: "Alarm Clock"},
     {id: 3, url: Sounds.CellphoneAlarmClock, name: "Cellphone Alarm Clock"},
@@ -40,7 +40,7 @@ const sounds: Array<ISound> = [
 
 const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, longBreak, soundUrl }) => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const [volume, setVolume] = useState<number>(30);
     const [newPomodoro, setNewPomodoro] = useState<number>(pomodoro);
     const [newShortBreak, setNewShortBreak] = useState<number>(shortBreak);
@@ -73,24 +73,30 @@ const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, lo
         setNewShortBreak(initialState.shortBreak);
         setNewLongBreak(initialState.longBreak);
     };
-    
+
+    const hamdleClickShowSettings = () => {
+        dispatch(showSettings(!isShowSettings));
+    };
+
     return (
         <div className="app-settings">
             <Dialog
                 open={isShowSettings}
                 keepMounted
-                onClose={() => dispatch(showSettings(!isShowSettings))}
+                onClose={hamdleClickShowSettings}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
                 <div className="title-wrapper">
                     <DialogTitle id="alert-dialog-title">Settings</DialogTitle>
-                    <CloseIcon className="close-button" onClick={() => dispatch(showSettings(!isShowSettings))} />
+                    <CloseIcon className="close-button" onClick={hamdleClickShowSettings} />
                 </div>
+
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         User preferences
                     </DialogContentText>
+
                     <div className="setting-item">
                         <Checkbox
                             defaultChecked
@@ -110,7 +116,7 @@ const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, lo
                                 multiple
                                 native
                                 value={sounds}
-                                onChange={(event: any) => dispatch(changeSound(event.target.value))}
+                                onChange={(event) => dispatch(changeSound(`${event.target.value}`))}
                                 inputProps={{
                                     id: 'select-multiple-native',
                                 }}
@@ -127,32 +133,35 @@ const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, lo
                     <DialogContentText id="alert-dialog-description">
                         Select volume
                     </DialogContentText>
+
                     <div className="setting-item">
                         <Grid container spacing={2} alignItems="center">
                             <Grid item>
-                            <VolumeUp />
+                                <VolumeUp />
                             </Grid>
+
                             <Grid item xs>
-                            <Slider
-                                value={typeof volume === 'number' ? volume : 0}
-                                onChange={(event, newVolume) => setVolume(+newVolume)}
-                                aria-labelledby="input-slider"
-                            />
+                                <Slider
+                                    value={typeof volume === 'number' ? volume : 0}
+                                    onChange={(event, newVolume) => setVolume(+newVolume)}
+                                    aria-labelledby="input-slider"
+                                />
                             </Grid>
+
                             <Grid item>
-                            <Input
-                                value={volume}
-                                margin="dense"
-                                onChange={(event) => setVolume(+event.target.value)}
-                                onBlur={handleBlur}
-                                inputProps={{
-                                    step: 10,
-                                    min: 0,
-                                    max: 100,
-                                    type: 'number',
-                                    'aria-labelledby': 'input-slider',
-                                }}
-                            />
+                                <Input
+                                    value={volume}
+                                    margin="dense"
+                                    onChange={(event) => setVolume(+event.target.value)}
+                                    onBlur={handleBlur}
+                                    inputProps={{
+                                        step: 10,
+                                        min: 0,
+                                        max: 100,
+                                        type: 'number',
+                                        'aria-labelledby': 'input-slider',
+                                    }}
+                                />
                             </Grid>
                         </Grid>
                     </div>
@@ -160,6 +169,7 @@ const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, lo
                     <DialogContentText id="alert-dialog-description">
                         Set custom times (in minutes)
                     </DialogContentText>
+
                     <div className="input-wrapper">
                         <TextField
                             className="input"
@@ -190,13 +200,16 @@ const Settings: FC<PropsSettings> = ({  isShowSettings, pomodoro, shortBreak, lo
                         />
                     </div>
                 </DialogContent>
+
                 <DialogActions>
                     <Button type="submit" onClick={saveChangedTime} color="primary">
                         Save
                     </Button>
+
                     <Button onClick={initSettings} color="primary">
                         Reset
                     </Button>
+
                     <Button onClick={() => playSound(soundUrl)} color="primary">
                         Sound test
                     </Button>

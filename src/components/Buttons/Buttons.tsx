@@ -29,7 +29,7 @@ const ButtonStop = withStyles(() => ({
 
 const Buttons: FC = () => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
 
     return (
         <div className="buttons">
@@ -41,6 +41,7 @@ const Buttons: FC = () => {
             >
                 Start
             </ButtonStart>
+
             <ButtonStop 
                 variant="outlined"
                 color="secondary"

@@ -16,6 +16,10 @@
     color: #390801;
 }
 
+.bold {
+    font-weight: 700;
+}
+
 .hints-title {
     font-size: 18px;
     font-weight: 800;

@@ -23,7 +23,7 @@ export interface State {
         isShowSettings: boolean,
         isShowLog: boolean
     },
-    log: Array<ILogItem>,
+    log: ILogItem[],
     modes: {
         mode: string,
         pomodoro: number,
@@ -44,7 +44,7 @@ export interface PropsHeader {
 
 export interface PropsLog {
     isShowLog: boolean,
-    log: Array<ILogItem>
+    log: ILogItem[]
 }
 
 export interface PropsModesMenu {
@@ -91,4 +91,11 @@ export enum DateOptions {
     hour = "numeric",
     minute = "numeric",
     second = "numeric"
+};
+
+export enum Keys {
+    Space = " ",
+    P = "p",
+    S = "s",
+    L = "l"
 };

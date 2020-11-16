@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { playSound, saveLog, toggleStart, updateTime } from '../../redux/actions/actions';
-import { DateOptions, ILogItem, Modes } from '../../types';
+import { DateOptions, ILogItem, Modes, PropsTimer } from '../../types';
 
 import './Timer.css';
 
-const Timer = ({ isStart, mode, timer, pomodoro, shortBreak, longBreak, soundUrl }: any) => {
+const Timer: FC<PropsTimer> = ({ isStart, mode, timer, pomodoro, shortBreak, longBreak, soundUrl }) => {
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const [seconds, setSeconds] = useState<number>(pomodoro * 60);
     const [timerId, setTimerId] = useState<number>(0);
     const [logItem, setLogItem] = useState<ILogItem>({
@@ -19,7 +19,7 @@ const Timer = ({ isStart, mode, timer, pomodoro, shortBreak, longBreak, soundUrl
     });
 
     useEffect(() => {
-        mode === Modes.ShortBreak ? 
+        mode === Modes.ShortBreak ?
         setSeconds(shortBreak * 60) : mode === Modes.LongBreak ?
         setSeconds(longBreak * 60) : setSeconds(pomodoro * 60);
     }, [mode, pomodoro, shortBreak, longBreak]);
@@ -31,19 +31,23 @@ const Timer = ({ isStart, mode, timer, pomodoro, shortBreak, longBreak, soundUrl
     useEffect(() => {
         if (!isStart) return;
         if (seconds > 0) {
-            let timeId: any = setTimeout(() => setSeconds(seconds - 1), 1000);
+            const timeId: number = window.setTimeout(() => setSeconds(seconds - 1), 1000);
             setTimerId(timeId);
         } else {
-            console.log("Bzzz!", seconds);
             playSound(soundUrl);
-            dispatch(toggleStart(false))
+            dispatch(toggleStart(false));
             clearTimeout(timerId);
         }
     }, [isStart, seconds]);
 
     useEffect(() => {
         if (isStart) {
-            setLogItem({...logItem, id: Date.now(), session: mode, startTime: new Date().toLocaleDateString("en-US", DateOptions)});
+            setLogItem({
+                ...logItem,
+                id: Date.now(),
+                session: mode,
+                startTime: new Date().toLocaleDateString("en-US", DateOptions)
+            });
         }
         if (!isStart && seconds === 0) {
             setLogItem({...logItem, endTime: new Date().toLocaleDateString("en-US", DateOptions)});
@@ -59,7 +63,9 @@ const Timer = ({ isStart, mode, timer, pomodoro, shortBreak, longBreak, soundUrl
 
     return (
         <div className="timer">
-            <h1 className="timer-content">{timer.minutes}:{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}</h1>
+            <h1 className="timer-content">
+                {timer.minutes}:{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}
+            </h1>
         </div>
     );
 };
